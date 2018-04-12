@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 
-public class ALStack implements Stack<T>{
+public class ALStack<T> implements Stack<T>{
 
 	private ArrayList<T> list = new ArrayList<T>();
 
@@ -11,7 +11,7 @@ public class ALStack implements Stack<T>{
 
     public T peek(){
     	return list.get(list.size() - 1);
-    } 
+    }
 
     public T pop(){
     	return list.remove(list.size() - 1);

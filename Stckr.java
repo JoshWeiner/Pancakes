@@ -7,7 +7,7 @@ public class Stckr
 {
     public static void main( String[] args )
     {
-	Stack<Z> cakes = new ALStack<Z>();
+	Stack<String> cakes = new ALStack<String>();
 	//Stack<Z> cakes = new LLStack<Z>();
 
 	//...

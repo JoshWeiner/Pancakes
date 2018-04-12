@@ -1,3 +1,8 @@
+//Alvin Ye, Joshua Weiner
+//APCS2 pd8
+//HW32 - Leon Leonwood Stack
+//2018-04-11
+
 import java.util.ArrayList;
 
 

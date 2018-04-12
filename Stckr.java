@@ -9,8 +9,9 @@ public class Stckr
     {
 
     //only uncomment one of these at a time...
-	Stack<String> cakes = new ALStack<String>();
-	//Stack<Z> cakes = new LLStack<Z>();
+
+	//Stack<String> cakes = new ALStack<String>();
+	Stack<String> cakes = new LLStack<String>();
 
 	System.out.println(cakes.pop()); //tests to see if pop() works on empty list
 	cakes.push("a");
@@ -22,7 +23,6 @@ public class Stckr
 	System.out.println(cakes);
 
 
-	//...
 	
     }//end main
 

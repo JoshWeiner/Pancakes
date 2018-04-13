@@ -27,33 +27,29 @@ public class Scheme
   //NOTE THIS METHOD ASSUMES THAT THERE ARE NO "/"" Operators
 
   public static String evaluate( String expr ) {
-      ALStack<Integer> stack = new ALStack<Integer>();
+      ALStack<String> stack = new ALStack<String>();
 
       String[] arr = expr.split("\\s+");
 
-      for(int i = arr.length - 1; i > 0; i--){
+      int i = arr.length - 2;
+      int op = 0;
 
-        if(isNumber(arr[i])){
-          stack.push(Integer.parseInt(arr[i]));
+      while(i > 0){
+        String curr = arr[i];
+        stack.push(curr);
+        if(arr[i].equals("+")){
+          op = 1;
         }
-        else if(arr[i].equals("+")){
-            int sum = stack.pop() + stack.pop();
-            stack.push(sum);                    
-        }
-        else if(arr[i].equals("-")){ 
-          int op0 = stack.pop();
-          int op1 = stack.pop();
-          int difference = op1 - op0;
-          stack.push(difference);          
+        else if(arr[i].equals("-")){
+          op = 2;
         }
         else if(arr[i].equals("*")){
-          int product = stack.pop() * stack.pop();
-          stack.push(product);
+          op = 3;
         }
-        }//end for loop
+        i--;
+      }
+      return unload(op, stack);
 
-        String finalAnswer = Integer.toString(stack.pop());
-        return finalAnswer;
   }//end evaluate()
 
 
@@ -65,7 +61,22 @@ public class Scheme
    ******************************************************/
   public static String unload( int op, Stack<String> numbers )
   {
-      return "String";
+        System.out.println(numbers);
+        System.out.println(op);
+        /*
+        int tot = Integer.parseInt(numbers.pop());
+        while (!numbers.isEmpty()) {
+          int num = Integer.parseInt(numbers.pop());
+          if (op == 1)
+            tot += num;
+          else if (op == 2)
+            tot -= num;
+          else
+            tot *= num;
+        }
+        return Integer.toString(tot);
+        */
+        return "string";
   }//end unload()
 
 

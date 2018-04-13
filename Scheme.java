@@ -36,23 +36,28 @@ public class Scheme
 
       while(i > 0){
         String curr = arr[i];
+        if (!curr.equals("(") && !curr.equals(")") && !isNumber(curr))
+          op = findOperator(curr);
         stack.push(curr);
-        if(arr[i].equals("+")){
-          op = 1;
-        }
-        else if(arr[i].equals("-")){
-          op = 2;
-        }
-        else if(arr[i].equals("*")){
-          op = 3;
-        }
         i--;
       }
       return unload(op, stack);
 
   }//end evaluate()
 
-
+  public static int findOperator(String s) {
+    int op = 0;
+    if(s.equals("+")){
+      op = 1;
+    }
+    else if(s.equals("-")){
+      op = 2;
+    }
+    else if(s.equals("*")){
+      op = 3;
+    }
+    return op;
+  }
   /******************************************************
    * precond:  Assumes top of input stack is a number.
    * postcond: Performs op on nums until closing paren is seen thru peek().
@@ -62,21 +67,96 @@ public class Scheme
   public static String unload( int op, Stack<String> numbers )
   {
         System.out.println(numbers);
-        System.out.println(op);
-        /*
-        int tot = Integer.parseInt(numbers.pop());
-        while (!numbers.isEmpty()) {
-          int num = Integer.parseInt(numbers.pop());
-          if (op == 1)
-            tot += num;
-          else if (op == 2)
-            tot -= num;
-          else
-            tot *= num;
+
+        int oper = 0;
+        String top = "";
+        if (!numbers.isEmpty())
+          top = numbers.peek();
+
+        int newtop = 0;
+
+        ALStack<String> inner = new ALStack<String>();
+
+        boolean paren = false;
+
+        int total = 0;
+
+        if (isNumber(top))
+           total = Integer.parseInt(top);
+        else
+           total = 0;
+
+        while(!numbers.isEmpty()){
+          String curr = numbers.peek();
+
+
+          //for debugging
+          try{
+            //print something here
+            Thread.sleep(1000);
+            System.out.println("Stack: " + numbers);
+            System.out.println("Current: " + curr);
+            System.out.println("Top: " + top);
+            System.out.println("Paren:" + paren);
+            System.out.println("Total: " + total);
+            System.out.println("NewTop: " + newtop);
+            System.out.println("Oper: " + oper);
+          }
+          catch(InterruptedException e){    System.out.println("got interrupted!");
+          }
+
+          if(curr.equals("(")) {
+            paren = true;
+            numbers.pop();
+          }
+
+          else if (curr.equals(")")) {
+            paren = false;
+            numbers.pop();
+            numbers.push(String.valueOf(newtop));
+          }
+
+          else if (paren == true) {
+            if (!curr.equals("(") && !curr.equals(")") && !isNumber(curr)) {
+              oper = findOperator(curr);
+              numbers.pop();
+              newtop = Integer.parseInt(numbers.pop());
+            }
+            else {
+                if (oper == 1) {
+                  newtop += Integer.parseInt(curr);
+                }
+                else if (oper == 2) {
+                  newtop = newtop - Integer.parseInt(curr);
+                }
+                else
+                  newtop *= Integer.parseInt(curr);
+                numbers.pop();
+            }
+          }
+
+
+
+          else if (!isNumber(curr))
+            numbers.pop();
+
+          else {
+            if (op == 1) {
+              total += Integer.parseInt(curr);
+            }
+            else if (op == 2) {
+              total -= Integer.parseInt(curr);
+            }
+            else
+              total *= Integer.parseInt(curr);
+
+            numbers.pop();
+          }
+
+          //numbers.push(unload(oper, inner));
         }
-        return Integer.toString(tot);
-        */
-        return "string";
+        return String.valueOf(total);
+
   }//end unload()
 
 

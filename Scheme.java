@@ -23,28 +23,37 @@ public class Scheme
    *           evaluate( "( + 4 3 )" ) -> 7
    *	         evaluate( "( + 4 ( * 2 5 ) 3 )" ) -> 17
    ******************************************************/
-  public static String evaluate( String expr ) {
-      ALStack<String> stack = new ALStack<String>();
-      String[] arr = expr.split("\\s+");
-      //Stacks and while loops go together like PB&J on a hot summer's day
-      System.out.println(stack);
 
-      int i = 0;
-      while (i < arr.length) {
-        String curr = stack.peek();
-        int op;
-        if(!isNumber(curr)) {
-          if (curr.equals("+"))
-            op = 1;
-          else if ((curr.equals("-"))
-            op = 2;
-          else if ((curr.equals("*")))
-            op = 3;
-          else if
-          stack.pop();
+  //NOTE THIS METHOD ASSUMES THAT THERE ARE NO "/"" Operators
+
+  public static String evaluate( String expr ) {
+      ALStack<Integer> stack = new ALStack<Integer>();
+
+      String[] arr = expr.split("\\s+");
+
+      for(int i = arr.length - 1; i > 0; i--){
+
+        if(isNumber(arr[i])){
+          stack.push(Integer.parseInt(arr[i]));
         }
-        else if
-      }
+        else if(arr[i].equals("+")){
+            int sum = stack.pop() + stack.pop();
+            stack.push(sum);                    
+        }
+        else if(arr[i].equals("-")){ 
+          int op0 = stack.pop();
+          int op1 = stack.pop();
+          int difference = op1 - op0;
+          stack.push(difference);          
+        }
+        else if(arr[i].equals("*")){
+          int product = stack.pop() * stack.pop();
+          stack.push(product);
+        }
+        }//end for loop
+
+        String finalAnswer = Integer.toString(stack.pop());
+        return finalAnswer;
   }//end evaluate()
 
 
@@ -56,17 +65,7 @@ public class Scheme
    ******************************************************/
   public static String unload( int op, Stack<String> numbers )
   {
-      int tot;
-      while (!numbers.isEmpty()) {
-        int num = Integer.parseInt(numbers.pop());
-        if (op == 1)
-          tot += num;
-        else if (op == 2)
-          tot -= num;
-        else
-          tot *= num;
-      }
-      return tot.toString();
+      return "String";
   }//end unload()
 
 
@@ -86,12 +85,12 @@ public class Scheme
   public static void main( String[] args )
   {
 
-      //v~~~~~~~~~~~~~~MAKE MORE~~~~~~~~~~~~~~v
+
       String zoo1 = "( + 4 3 )";
       System.out.println(zoo1);
       System.out.println("zoo1 eval'd: " + evaluate(zoo1) );
       //...7
-      /*
+
       String zoo2 = "( + 4 ( * 2 5 ) 3 )";
       System.out.println(zoo2);
       System.out.println("zoo2 eval'd: " + evaluate(zoo2) );
@@ -106,6 +105,9 @@ public class Scheme
       System.out.println(zoo4);
       System.out.println("zoo4 eval'd: " + evaluate(zoo4) );
       //...-4
+
+
+      /*v~~~~~~~~~~~~~~MAKE MORE~~~~~~~~~~~~~~v
       ^~~~~~~~~~~~~~~~AWESOME~~~~~~~~~~~~~~~^*/
   }//main
 
